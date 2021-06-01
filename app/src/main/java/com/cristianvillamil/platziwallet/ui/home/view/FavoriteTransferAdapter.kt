@@ -8,7 +8,7 @@ import com.cristianvillamil.platziwallet.ui.home.FavoriteTransfer
 
 class FavoriteTransferAdapter : RecyclerView.Adapter<FavoriteTransferViewHolder>() {
 
-    private lateinit var favoriteTransferItems: List<FavoriteTransfer>
+    private var favoriteTransferItems: List<FavoriteTransfer>  = arrayListOf() //  Lista vacia al crear el adapter, y en lo que el presenter recibe los datos de interactor.
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteTransferViewHolder =
             FavoriteTransferViewHolder(
                     LayoutInflater.from(parent.context).inflate(

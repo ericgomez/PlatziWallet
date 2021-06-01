@@ -1,5 +1,6 @@
 package com.cristianvillamil.platziwallet.ui.home.data
 
+import android.os.Handler
 import com.cristianvillamil.platziwallet.ui.home.FavoriteTransfer
 import com.cristianvillamil.platziwallet.ui.home.HomeContract
 
@@ -54,8 +55,15 @@ class HomeInteractor {
             )
         )
 
-        // Enviamos la lista items
-        responseCallback.onResponse(items)
+        val runnable = Runnable {
+            // Enviamos la lista items
+            responseCallback.onResponse(items)
+        }
+
+        // Simulamos una peticion tarde 3000 milisegundos
+        val handler = Handler()
+        handler.postDelayed(runnable, 3000)
+
     }
 
 }
