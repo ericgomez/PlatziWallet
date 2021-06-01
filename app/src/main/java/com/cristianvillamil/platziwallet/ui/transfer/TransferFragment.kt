@@ -52,6 +52,11 @@ class TransferFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initAmountInputEditText()
         initRecyclerView()
+
+        // Interceptamos el evento transferButton
+        transferButton.setOnClickListener {
+            //TODO: Call TransferProxy
+        }
     }
 
     private fun initRecyclerView() {
