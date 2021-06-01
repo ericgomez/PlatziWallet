@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
             .execute(this,"exampleFile", "HolaMundo", "PlatziWallet") // Ejecutamos el comando de juardar con el nombre de exampleFile y los argumentos "HolaMundo", "PlatziWallet
 
         commandsManager
-            .getCommand("SaveCommand")
+            .getCommand("ReadCommand")
             .execute(this, "exampleFile") // Ejecutamos el comando para leer el archivo exampleFile
     }
 }

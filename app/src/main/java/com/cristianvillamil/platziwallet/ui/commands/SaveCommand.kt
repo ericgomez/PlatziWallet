@@ -9,10 +9,13 @@ class SaveCommand : FileCommand {
     override fun execute(context: Context, fileName: String, vararg arguments: String) {
 
         try {
+            var argumentsString = ""
+            arguments.forEach { argumentsString = argumentsString + "\n"+it } // Obtenemos cada uno de los argumentos y agregarlos en su contenido
+
             // Variable para poder escribir en nuestro celular, el cual nos servira como puente para poder escribir en memoria
             val outputStreamWriter = OutputStreamWriter(context.openFileOutput(fileName, Context.MODE_PRIVATE))
 
-            outputStreamWriter.write(arguments.toString()) // le indicamos anuesrea variable que puede escribir
+            outputStreamWriter.write(argumentsString) // le indicamos anuesrea variable que puede escribir
             outputStreamWriter.close() // Cerramos nuestro sistema de archivos
 
         }catch (exception: IOException){
