@@ -1,5 +1,7 @@
 package com.cristianvillamil.platziwallet.ui.home.presenter
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.cristianvillamil.platziwallet.UserSingleton
 import com.cristianvillamil.platziwallet.ui.home.FavoriteTransfer
 import com.cristianvillamil.platziwallet.ui.home.HomeContract
@@ -9,6 +11,7 @@ import com.cristianvillamil.platziwallet.ui.home.data.User
 class HomePresenter(private val view: HomeContract.View) : HomeContract.Presenter {
 
     private val homeInteractor = HomeInteractor()
+    private val percentageLiveData : MutableLiveData<String> = MutableLiveData() // Creamos la instancia de tipo mutable
 
     override fun retrieveFavoriteTransfers() {
 
@@ -25,6 +28,8 @@ class HomePresenter(private val view: HomeContract.View) : HomeContract.Presente
                     .setPassword("kjhkjshdkjashd")
                     .build()
 
+                percentageLiveData.value = "40%" // indicamos un nuevo valor
+
                 view.hideLoader() // Le indicamos a la vista que oculte el loader
                 view.showFavoriteTransfers(favoriteList) // Muestra la lista de favoritos
 
@@ -32,4 +37,7 @@ class HomePresenter(private val view: HomeContract.View) : HomeContract.Presente
 
         })
     }
+
+    // Devolvemos la interfaz una instancia de LiveData
+    override fun getPercentageLiveData() : LiveData<String> = percentageLiveData
 }
