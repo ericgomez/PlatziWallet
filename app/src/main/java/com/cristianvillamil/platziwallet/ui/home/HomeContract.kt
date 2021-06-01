@@ -8,6 +8,11 @@ interface HomeContract {
     }
 
     interface Presenter{
-        fun retrieveFavoriteTransfers() : List<FavoriteTransfer>
+        fun retrieveFavoriteTransfers()
+    }
+
+    // Interfaz del Callback que devuelve el dato que esta entre el presentador y la DB
+    interface OnResponseCallback{
+        fun onResponse(favoriteList : List<FavoriteTransfer>)
     }
 }
