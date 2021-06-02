@@ -1,16 +1,20 @@
 package com.cristianvillamil.platziwallet.ui.transfer
 
 import android.os.Bundle
+import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cristianvillamil.platziwallet.R
+import com.cristianvillamil.platziwallet.ui.transfer.data.ApplicationDatabase
+import com.cristianvillamil.platziwallet.ui.transfer.data.TransferEntity
 import kotlinx.android.synthetic.main.fragment_transfer.*
 import java.text.NumberFormat
 
@@ -55,7 +59,30 @@ class TransferFragment : Fragment() {
 
         // Interceptamos el evento transferButton
         transferButton.setOnClickListener {
-            //TODO: Call TransferProxy
+            ApplicationDatabase.getAppDatabase(context!!)
+                ?.getDAO()?.saveTransfer( // Conectamos con TransferDAO con el metodo de guarda tarnferencia
+                    TransferEntity( // Pamos todos los parametros necesarios de TransferEntity
+                    userId = "92384",
+                    userName = "PlatziUser",
+                    transactionDate = "12/12/2020",
+                    transactionAmount = "50.000",
+                    receiverUserId = "92387"
+                )
+                )
+
+            // Creamos un runnable que nos ayudara a ejecutar una tarea despues de cierto tiempo
+            val runnable = Runnable {
+                var userTransferString = ""
+                val transferList = ApplicationDatabase.getAppDatabase(context!!) // Traemos la base de datos
+                    ?.getDAO()?.findTransferByUserName("PlatziUser") // indicamos que nos retorne la trnaferencia con findTransferByUserName con el nombre PlatziUser
+                transferList!!.forEach { userTransferString += "\n" + it } // Creamos una concatenacion y nos aseguramos que no sea nula
+
+                Toast.makeText(context!!, userTransferString, Toast.LENGTH_LONG).show() // Mostramos pormedio de un Toast
+            }
+
+            // indicamos el tiempo en que nos mostrara el prcedimeinto por medio de un handler
+            val handler = Handler()
+            handler.postDelayed(runnable, 3000) // Realizara la accion en 3 segundos
         }
     }
 
